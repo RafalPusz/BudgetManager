@@ -1,0 +1,15 @@
+C:\Users\rpusz\source\repos\BudgetManager\BudgetManager\bin\Debug\net9.0\BudgetManager.exe
+C:\Users\rpusz\source\repos\BudgetManager\BudgetManager\bin\Debug\net9.0\BudgetManager.deps.json
+C:\Users\rpusz\source\repos\BudgetManager\BudgetManager\bin\Debug\net9.0\BudgetManager.runtimeconfig.json
+C:\Users\rpusz\source\repos\BudgetManager\BudgetManager\bin\Debug\net9.0\BudgetManager.dll
+C:\Users\rpusz\source\repos\BudgetManager\BudgetManager\bin\Debug\net9.0\BudgetManager.pdb
+C:\Users\rpusz\source\repos\BudgetManager\BudgetManager\obj\Debug\net9.0\BudgetManager.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\rpusz\source\repos\BudgetManager\BudgetManager\obj\Debug\net9.0\BudgetManager.AssemblyInfoInputs.cache
+C:\Users\rpusz\source\repos\BudgetManager\BudgetManager\obj\Debug\net9.0\BudgetManager.AssemblyInfo.cs
+C:\Users\rpusz\source\repos\BudgetManager\BudgetManager\obj\Debug\net9.0\BudgetManager.csproj.CoreCompileInputs.cache
+C:\Users\rpusz\source\repos\BudgetManager\BudgetManager\obj\Debug\net9.0\BudgetManager.dll
+C:\Users\rpusz\source\repos\BudgetManager\BudgetManager\obj\Debug\net9.0\refint\BudgetManager.dll
+C:\Users\rpusz\source\repos\BudgetManager\BudgetManager\obj\Debug\net9.0\BudgetManager.pdb
+C:\Users\rpusz\source\repos\BudgetManager\BudgetManager\obj\Debug\net9.0\BudgetManager.genruntimeconfig.cache
+C:\Users\rpusz\source\repos\BudgetManager\BudgetManager\obj\Debug\net9.0\ref\BudgetManager.dll
+C:\Users\rpusz\source\repos\BudgetManager\BudgetManager\obj\Debug\net9.0\BudgetManager.sourcelink.json

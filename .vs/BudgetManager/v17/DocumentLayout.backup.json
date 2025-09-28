@@ -1,0 +1,145 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\rpusz\\source\\repos\\BudgetManager\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{66EB4756-2AE0-4A61-AD37-FC66D76D08A5}|BudgetManager\\BudgetManager.csproj|c:\\users\\rpusz\\source\\repos\\budgetmanager\\budgetmanager\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{66EB4756-2AE0-4A61-AD37-FC66D76D08A5}|BudgetManager\\BudgetManager.csproj|solutionrelative:budgetmanager\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\rpusz\\source\\repos\\Mened\u017Cer wydatk\u00F3w\\Mened\u017Cer wydatk\u00F3w\\Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\rpusz\\source\\repos\\Mened\u017Cer wydatk\u00F3w\\Mened\u017Cer wydatk\u00F3w\\Models\\Income.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\rpusz\\source\\repos\\Mened\u017Cer wydatk\u00F3w\\Mened\u017Cer wydatk\u00F3w\\Models\\Expense.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\rpusz\\source\\repos\\Mened\u017Cer wydatk\u00F3w\\Mened\u017Cer wydatk\u00F3w\\Services\\StorageService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\rpusz\\source\\repos\\Mened\u017Cer wydatk\u00F3w\\Mened\u017Cer wydatk\u00F3w\\Services\\Helpers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\rpusz\\source\\repos\\Mened\u017Cer wydatk\u00F3w\\Mened\u017Cer wydatk\u00F3w\\Services\\BudgetService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\rpusz\\source\\repos\\Mened\u017Cer wydatk\u00F3w\\Mened\u017Cer wydatk\u00F3w\\Models\\Transaction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\rpusz\\source\\repos\\BudgetManager\\BudgetManager\\Program.cs",
+              "RelativeDocumentMoniker": "BudgetManager\\Program.cs",
+              "ToolTip": "C:\\Users\\rpusz\\source\\repos\\BudgetManager\\BudgetManager\\Program.cs",
+              "RelativeToolTip": "BudgetManager\\Program.cs",
+              "ViewState": "AgIAADkAAAAAAAAAAAAwwBcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-27T23:04:11.852Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Expense.cs",
+              "DocumentMoniker": "C:\\Users\\rpusz\\source\\repos\\Mened\u017Cer wydatk\u00F3w\\Mened\u017Cer wydatk\u00F3w\\Models\\Expense.cs",
+              "RelativeDocumentMoniker": "..\\Mened\u017Cer wydatk\u00F3w\\Mened\u017Cer wydatk\u00F3w\\Models\\Expense.cs",
+              "ToolTip": "C:\\Users\\rpusz\\source\\repos\\Mened\u017Cer wydatk\u00F3w\\Mened\u017Cer wydatk\u00F3w\\Models\\Expense.cs",
+              "RelativeToolTip": "..\\Mened\u017Cer wydatk\u00F3w\\Mened\u017Cer wydatk\u00F3w\\Models\\Expense.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-27T22:23:03.834Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "StorageService.cs",
+              "DocumentMoniker": "C:\\Users\\rpusz\\source\\repos\\Mened\u017Cer wydatk\u00F3w\\Mened\u017Cer wydatk\u00F3w\\Services\\StorageService.cs",
+              "RelativeDocumentMoniker": "..\\Mened\u017Cer wydatk\u00F3w\\Mened\u017Cer wydatk\u00F3w\\Services\\StorageService.cs",
+              "ToolTip": "C:\\Users\\rpusz\\source\\repos\\Mened\u017Cer wydatk\u00F3w\\Mened\u017Cer wydatk\u00F3w\\Services\\StorageService.cs",
+              "RelativeToolTip": "..\\Mened\u017Cer wydatk\u00F3w\\Mened\u017Cer wydatk\u00F3w\\Services\\StorageService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-27T21:54:46.606Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Helpers.cs",
+              "DocumentMoniker": "C:\\Users\\rpusz\\source\\repos\\Mened\u017Cer wydatk\u00F3w\\Mened\u017Cer wydatk\u00F3w\\Services\\Helpers.cs",
+              "RelativeDocumentMoniker": "..\\Mened\u017Cer wydatk\u00F3w\\Mened\u017Cer wydatk\u00F3w\\Services\\Helpers.cs",
+              "ToolTip": "C:\\Users\\rpusz\\source\\repos\\Mened\u017Cer wydatk\u00F3w\\Mened\u017Cer wydatk\u00F3w\\Services\\Helpers.cs",
+              "RelativeToolTip": "..\\Mened\u017Cer wydatk\u00F3w\\Mened\u017Cer wydatk\u00F3w\\Services\\Helpers.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-27T21:53:40.863Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "BudgetService.cs",
+              "DocumentMoniker": "C:\\Users\\rpusz\\source\\repos\\Mened\u017Cer wydatk\u00F3w\\Mened\u017Cer wydatk\u00F3w\\Services\\BudgetService.cs",
+              "RelativeDocumentMoniker": "..\\Mened\u017Cer wydatk\u00F3w\\Mened\u017Cer wydatk\u00F3w\\Services\\BudgetService.cs",
+              "ToolTip": "C:\\Users\\rpusz\\source\\repos\\Mened\u017Cer wydatk\u00F3w\\Mened\u017Cer wydatk\u00F3w\\Services\\BudgetService.cs",
+              "RelativeToolTip": "..\\Mened\u017Cer wydatk\u00F3w\\Mened\u017Cer wydatk\u00F3w\\Services\\BudgetService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-27T21:51:57.999Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\rpusz\\source\\repos\\Mened\u017Cer wydatk\u00F3w\\Mened\u017Cer wydatk\u00F3w\\Program.cs",
+              "RelativeDocumentMoniker": "..\\Mened\u017Cer wydatk\u00F3w\\Mened\u017Cer wydatk\u00F3w\\Program.cs",
+              "ToolTip": "C:\\Users\\rpusz\\source\\repos\\Mened\u017Cer wydatk\u00F3w\\Mened\u017Cer wydatk\u00F3w\\Program.cs",
+              "RelativeToolTip": "..\\Mened\u017Cer wydatk\u00F3w\\Mened\u017Cer wydatk\u00F3w\\Program.cs",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-24T13:04:56.944Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Income.cs",
+              "DocumentMoniker": "C:\\Users\\rpusz\\source\\repos\\Mened\u017Cer wydatk\u00F3w\\Mened\u017Cer wydatk\u00F3w\\Models\\Income.cs",
+              "RelativeDocumentMoniker": "..\\Mened\u017Cer wydatk\u00F3w\\Mened\u017Cer wydatk\u00F3w\\Models\\Income.cs",
+              "ToolTip": "C:\\Users\\rpusz\\source\\repos\\Mened\u017Cer wydatk\u00F3w\\Mened\u017Cer wydatk\u00F3w\\Models\\Income.cs",
+              "RelativeToolTip": "..\\Mened\u017Cer wydatk\u00F3w\\Mened\u017Cer wydatk\u00F3w\\Models\\Income.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-27T22:39:00.657Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Transaction.cs",
+              "DocumentMoniker": "C:\\Users\\rpusz\\source\\repos\\Mened\u017Cer wydatk\u00F3w\\Mened\u017Cer wydatk\u00F3w\\Models\\Transaction.cs",
+              "RelativeDocumentMoniker": "..\\Mened\u017Cer wydatk\u00F3w\\Mened\u017Cer wydatk\u00F3w\\Models\\Transaction.cs",
+              "ToolTip": "C:\\Users\\rpusz\\source\\repos\\Mened\u017Cer wydatk\u00F3w\\Mened\u017Cer wydatk\u00F3w\\Models\\Transaction.cs",
+              "RelativeToolTip": "..\\Mened\u017Cer wydatk\u00F3w\\Mened\u017Cer wydatk\u00F3w\\Models\\Transaction.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-27T21:49:58.127Z"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{56df62a4-05a3-4e5b-aa1a-99371ccfb997}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

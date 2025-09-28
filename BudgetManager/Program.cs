@@ -113,14 +113,58 @@ public class Program
     private void ShowMenu()
     {
         Console.Clear();
-        Console.WriteLine("1. Dodaj przychód");
-        Console.WriteLine("2. Dodaj wydatek");
-        Console.WriteLine("3. Edytuj przychód");
-        Console.WriteLine("4. Edytuj wydatek");
-        Console.WriteLine("5. Pokaż przychody");
-        Console.WriteLine("6. Pokaż wydatki");
-        Console.WriteLine("7. Wyjdź");
-        Console.WriteLine($"\nBilans na miesiąc {DateTime.Now:MMMM}: {budgetService.GetMonthlyBalance(DateTime.Now.Year, DateTime.Now.Month)} zł.\n");
+        int menuWidth = 40;
+        List<string> menuItems = ["1. Dodaj przychód", "2. Dodaj wydatek", "3. Edytuj przychód","4. Edytuj wydatek", "5. Pokaż przychody", "6. Pokaż wydatki", "7. Wyjdź"];
+        Console.WriteLine($"{"Zarządzanie budżetem".PadLeft((menuWidth + "Zarządzanie budżetem".Length) / 2)}");
+        Console.ForegroundColor = ConsoleColor.Cyan;
+        Console.WriteLine($" {new string('=', menuWidth)} ");
+        Console.ResetColor();
+
+        foreach (string menuItem in menuItems)
+        {
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.Write("|");
+            Console.ResetColor();
+            Console.Write($"{menuItem}{new string(' ', menuWidth - menuItem.Length)}");
+
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.Write("|\n");    
+            Console.WriteLine($"|{new string(' ', menuWidth)}|");
+            Console.ResetColor();
+        }
+
+        string bilance = $"Bilans na miesiąc {DateTime.Now:MMMM}";
+        string bilanceCount = $"{budgetService.GetMonthlyBalance(DateTime.Now.Year, DateTime.Now.Month)} zł.";
+
+        Console.ForegroundColor = ConsoleColor.Cyan;
+        Console.WriteLine($"|{new string('=', menuWidth)}|");
+        Console.ResetColor();
+
+
+        Console.ForegroundColor = ConsoleColor.Cyan;
+        Console.Write("|");
+        Console.ResetColor();
+
+        Console.Write($"{new string(' ', (menuWidth - bilance.Length) / 2)}{bilance}{new string(' ', (menuWidth - bilance.Length) / 2)}");
+
+        Console.ForegroundColor = ConsoleColor.Cyan;
+        Console.Write("|\n");
+        Console.ResetColor();
+
+        Console.ForegroundColor = ConsoleColor.Cyan;
+        Console.Write("|");
+        Console.ResetColor();
+
+        Console.Write($"{new string(' ', (menuWidth - bilanceCount.Length) / 2)}{bilanceCount}{new string(' ', (menuWidth - bilanceCount.Length) / 2)}");
+
+        Console.ForegroundColor = ConsoleColor.Cyan;
+        Console.Write("|\n");
+        Console.ResetColor();
+
+        Console.ForegroundColor = ConsoleColor.Cyan;
+        Console.WriteLine($" {new string('=', menuWidth)} ");
+        Console.ResetColor();
+       
     }
     private void ShowIncomes()
     {
