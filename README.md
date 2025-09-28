@@ -1,5 +1,9 @@
 # Rafał Pusz - BudgetManager
 
+## 📦 Download
+You can download the latest version here:  
+[⬇️ Download BudgetManager (.exe)](https://1drv.ms/u/c/fc80cfff40bb3ad4/EWE8hPzEFbZJvht4tO09XpkBqqXUzQgvuofdn0ezeEUAwA?e=R0HooZ&download=1)
+
 ## Description
 BudgetManager is a simple console application written in C# that helps users manage their personal finances. The program allows you to add, edit, and remove incomes and expenses, and calculates the monthly balance automatically. Data is saved to a file, so you can track your budget over time.
 
