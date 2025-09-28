@@ -11,7 +11,7 @@ BudgetManager is a simple console application written in C# that helps users man
 - **Async/Await for asynchronous file operations, such as loading and saving dat**
 
 ## Environments Used
-- **Windows 10 / 11**
+- **Windows 11**
 - **Visual Studio 2022**
 
 ## Program Walk-through
