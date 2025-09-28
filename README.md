@@ -18,7 +18,7 @@ BudgetManager is a simple console application written in C# that helps users man
 
 <p align="center">
 Launch the program: <br/>
-<img src="https://imgur.com/a/OdmyBwY" height="80%" width="80%" alt="BudgetManager Start"/>
+<img src="https://imgur.com/HOwMJ7n" height="80%" width="80%" alt="BudgetManager Start"/>
 <br />
 <br />
 Add an income or expense: <br/>
