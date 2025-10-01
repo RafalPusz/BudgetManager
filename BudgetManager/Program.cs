@@ -1,9 +1,10 @@
-﻿using System.Diagnostics;
+﻿using BudgetManager.Models;
+using BudgetManager.Services;
+using Menedżer_wydatków.Services;
+using System.Diagnostics;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using BudgetManager.Models;
-using BudgetManager.Services;
 
 // Main entry point of the Budget Manager console application.
 // Responsible for managing the program lifecycle, user interface, 
@@ -11,7 +12,8 @@ using BudgetManager.Services;
 public class Program
 {
     private BudgetService budgetService = new(); // Handles all financial operations (add, edit, calculate balance)
-    private Helpers helpers = new(); // Utility class for input validation and user messages
+    InputValidator validator = new();
+    UiRenderer ui = new();
     private StorageService storageService = new(); // Manages data loading and saving from/to file
 
     #region Engine this application
@@ -90,8 +92,8 @@ public class Program
                 '2' => () => AddIncomeOrExpenseAsync(false),
                 '3' => () => EditIncomeOrExpenseData(),
                 '4' => () => EditIncomeOrExpenseData(false),
-                '5' => () => { ShowIncomes(); return Task.CompletedTask;},
-                '6' => () => { ShowExpenses(); return Task.CompletedTask;},
+                '5' => () => { ShowIncomesOrExpenses(); return Task.CompletedTask;},
+                '6' => () => { ShowIncomesOrExpenses(false); return Task.CompletedTask;},
                 '7' => async () =>
                 {
                     await storageService.SaveAsync(budgetService);
@@ -99,7 +101,7 @@ public class Program
                 },
                 _ => async () => 
                 {
-                    helpers.ShowError("Nieznana opcja");
+                    ui.ShowError("Nieznana opcja");
                     await Task.Delay(200);
                 },
             };
@@ -114,110 +116,92 @@ public class Program
     {
         List<string> menuItems = ["1. Dodaj przychód", "2. Dodaj wydatek", "3. Edytuj przychód", "4. Edytuj wydatek", "5. Pokaż przychody", "6. Pokaż wydatki", "7. Wyjdź"];
 
-        helpers.DrawUiFrame("Zarządzanie budżetem", menuItems, $"Bilans na miesiąc {DateTime.Now:MMMM}: {budgetService.GetMonthlyBalance(DateTime.Now.Year, DateTime.Now.Month)} zł"); 
+        ui.DrawUiFrame("Zarządzanie budżetem", menuItems, $"Bilans na miesiąc {DateTime.Now:MMMM}: {budgetService.GetMonthlyBalance(DateTime.Now.Year, DateTime.Now.Month)} zł"); 
     }
 
-    private void ShowIncomes()  
+    private void ShowIncomesOrExpenses(bool isIncome = true)  
     {
-        var incomes = budgetService.GetIncomes()
-            .Select(i => $"{i.Date:d MMMM yyyy} | {i.Source} | {i.Amount} zł")
+        List<Transaction> transactionList = isIncome
+        ? budgetService.Transactions.OfType<Income>().Cast<Transaction>().ToList()
+        : budgetService.Transactions.OfType<Expense>().Cast<Transaction>().ToList();
+
+        var transactionListToStringList = transactionList
+            .Select(t => $"{t.Date:d MMMM yyyy} | {t.Title} | {t.Amount} zł")
             .ToList();
-        if (!incomes.Any())
+            
+
+        if (!transactionListToStringList.Any())
         {
-            incomes.Add("Brak przychodów");
+            transactionListToStringList.Add(isIncome ? "Brak przychodów" : "Brak wydatków");
         }
 
-        helpers.DrawUiFrame("Twoje przychody", incomes);
-        ReturnToMenu();
-    }
-    private void ShowExpenses()
-    {
-        var expenses = budgetService.GetExpenses()
-            .Select(e => $"{e.Date:dd MMMM yyyy} | {e.Name} | {e.Amount} zł")
-            .ToList();
-        if(!expenses.Any())
-        {
-            expenses.Add("Brak wydatków");
-        }
-
-        helpers.DrawUiFrame("Twoje wydadki", expenses);
+        ui.DrawUiFrame($"Twoje{(isIncome ? "  przychody" : " wydatki")}", transactionListToStringList);
         ReturnToMenu();
     }
     #endregion
 
     #region Edit Transaction menu and options
     private void EditNameOption(in bool isIncome, List<Transaction> transactionList, in int keyListNumber)
-    {
-        while (true)
+    {   
+        try
         {
-            string newSourceOrName = helpers.ReadNonEmptyString($"Podaj {(isIncome ? "źródło przychodu" : "nazwę wydatku")}: ");
-
-            try
+            string newSourceOrName = validator.ReadNonEmptyString($"Podaj {(isIncome ? "źródło przychodu" : "nazwę wydatku")}: ");
+            if (isIncome)
             {
-                if (isIncome)
-                {
-                    var income = (Income)transactionList[(int)keyListNumber];
-                    income.Source = newSourceOrName;
-                }
-                else
-                {
-                    var expense = (Expense)transactionList[(int)keyListNumber];
-                    expense.Name = newSourceOrName;
-                }
-                helpers.ShowConfirmMessange("Zmieniono nazwę");
-                break;
-            }
-            catch (Exception ex)
-            {
-                helpers.ShowError(ex.Message);
-            }
-        }
-    }
-    private void EditAmountOptions(in bool isIncome, List<Transaction> transactionList, in int keyListNumber)
-    {
-        decimal amount = helpers.ReadDecimal("Podaj kwotę w PLN: ");
-        while (true)
-        {
-            try
-            {
-                transactionList[keyListNumber].Amount = amount;
-                helpers.ShowConfirmMessange("Zmieniono kwotę.");
-                break;
-            }
-            catch (Exception ex)
-            {
-                helpers.ShowError(ex.Message);
-            }
-        }
-    }
-    private void EditDateOption(in bool isIncome, List<Transaction> transactionList, in int keyListNumber)
-    {
-        while (true)
-        {
-            Console.Clear();
-            DateTime newDate = helpers.ReadDate(false);
-            transactionList[keyListNumber].Date = newDate;
-
-            helpers.ShowConfirmMessange("Zmieniono datę");
-            break;
-        }
-    }
-    private void DeleteTransactionOption(in bool isIncome, List<Transaction> transactionList, in int keyListNumber)
-    {
-        Console.WriteLine($"Czy na pewno chcesz usunąć tranzakcję '{transactionList[keyListNumber]}' (T/N);");
-        while (true)
-        {
-            if (Console.ReadKey(true).KeyChar == 't' || Console.ReadKey(true).KeyChar == 'T')
-            {
-                budgetService.RemoveTransaction(transactionList[(int)keyListNumber]);
-                helpers.ShowConfirmMessange("Usunięto tranzakcje.");
-                break;
+                var income = (Income)transactionList[keyListNumber];
+                income.Source = newSourceOrName;
             }
             else
-            {       
-                break;
+            {
+                var expense = (Expense)transactionList[keyListNumber];
+                expense.Name = newSourceOrName;
             }
+            ui.ShowSuccess("Zmieniono nazwę");
         }
+        catch (Exception ex)
+        {
+            ui.ShowError(ex.Message);
+        }
+        
+    }
+    private void EditAmountOptions(List<Transaction> transactionList, in int keyListNumber)
+    {
+        try
+        {
+            decimal amount = validator.ReadDecimal("Podaj kwotę w PLN: ");
+            transactionList[keyListNumber].Amount = amount;
+            ui.ShowSuccess("Zmieniono kwotę.");
+        }
+        catch (Exception ex)
+        {
+            ui.ShowError(ex.Message);
+        }
+    }
+    private void EditDateOption(List<Transaction> transactionList, in int keyListNumber)
+    {
+        try
+        {
+            DateTime newDate = validator.ReadDate("Podaj nową datę: ");
+            transactionList[keyListNumber].Date = newDate;
+
+            ui.ShowSuccess("Zmieniono datę");
+        }
+        catch (Exception ex)
+        {
+            ui.ShowError(ex.Message);
+        }
+    
+    }
+    private void DeleteTransactionOption(List<Transaction> transactionList, in int keyListNumber)
+    {
+        Console.WriteLine($"Czy na pewno chcesz usunąć tranzakcję '{transactionList[keyListNumber]}' (T/N);");
+
+        if (Console.ReadKey(true).KeyChar == 't' || Console.ReadKey(true).KeyChar == 'T')
+        {
+            budgetService.RemoveTransaction(transactionList[keyListNumber]);
+            ui.ShowSuccess("Usunięto tranzakcje.");
+        }
+        
     }
     private async Task EditIncomeOrExpenseData(bool isIncome = true)
     {
@@ -227,15 +211,22 @@ public class Program
         ? budgetService.Transactions.OfType<Income>().Cast<Transaction>().ToList()
         : budgetService.Transactions.OfType<Expense>().Cast<Transaction>().ToList();
 
-        int keyListNumber;
+        int keyListNumber = 0;
 
         var transactionListToStringList = transactionList
             .Select(t => $"{t.Date: d MMMM yyyy} | {t.Title} | {t.Amount}")
             .ToList();
 
-        while (true)
+
+        if (!transactionList.Any())
         {
-            helpers.DrawUiFrame($"Lista {(isIncome ? "przychodów" : "wydatków")}", transactionListToStringList, "Wybierz z listy pozycję, którą chcesz edytować");
+            transactionListToStringList.Add("Brak danych");
+        }
+
+        while (keyListNumber <= 0  || keyListNumber > transactionList.Count())
+        {
+            ui.DrawUiFrame($"Lista {(isIncome ? "przychodów" : "wydatków")}", transactionListToStringList, transactionList.Any() ? "Wybierz z listy pozycję, którą chcesz edytować" : null);
+
             if(!transactionList.Any())
             {
                 ReturnToMenu();
@@ -243,34 +234,29 @@ public class Program
 
             try
             {
-                keyListNumber = helpers.IntiggerValidation(Console.ReadKey(true).KeyChar.ToString());
-
-                if (keyListNumber <= transactionList.Count() && keyListNumber != 0)
-                {
-                    break;
-                }
+                keyListNumber = validator.ParseInt(Console.ReadKey(true).KeyChar.ToString());
             }
-            catch (Exception ex)
+            catch
             {
-                helpers.ShowError(ex.Message);
+                ui.ShowError("Nie znaleziono takiej opcji.");
             }
         }
 
         keyListNumber--;
         List<string> menuItems= ["1. Nazwa", "2. Kwota", "3. Data", "4. Usuń element"];
 
-        helpers.DrawUiFrame($"Edytowany element: {transactionList[(int)keyListNumber]}", menuItems, "Wybierz element który chcesz edytować");
+        ui.DrawUiFrame($"Edytowany element: {transactionList[(int)keyListNumber]}", menuItems, "Wybierz element który chcesz edytować");
 
         while (true)
         {
             bool endWhile = false;
             Action action = Console.ReadKey(true).KeyChar switch
             {
-                '1' => () => {EditNameOption(in isIncome, transactionList, in keyListNumber); endWhile = true;},
-                '2' => () => {EditAmountOptions(in isIncome, transactionList, in keyListNumber); endWhile = true;},
-                '3' => () => {EditDateOption(in isIncome, transactionList, in keyListNumber); endWhile = true; },
-                '4' => () => {DeleteTransactionOption(in isIncome, transactionList, in keyListNumber); endWhile = true;}, 
-                _ => () => helpers.ShowError("Błędna opcja."!)
+                '1' => () => {EditNameOption(isIncome, transactionList, in keyListNumber); endWhile = true;},
+                '2' => () => {EditAmountOptions(transactionList, in keyListNumber); endWhile = true;},
+                '3' => () => {EditDateOption(transactionList, in keyListNumber); endWhile = true; },
+                '4' => () => {DeleteTransactionOption(transactionList, in keyListNumber); endWhile = true;}, 
+                _ => () => ui.ShowError("Błędna opcja."!)
             };
             action();
             if(endWhile)
@@ -287,41 +273,35 @@ public class Program
 
     private async Task AddIncomeOrExpenseAsync(bool isIncome = true)
     {
-        var (sourceOrName, amount, date) = GetIncomeOrExpenseData(isIncome);
         try
         {
+            string sourceOrName = validator.ReadNonEmptyString($"Podaj {(isIncome ? "źródło przychodu" : "nazwę wydatku")}: ");
+            decimal amount = validator.ReadDecimal("Podaj kwotę w PLN: ");
+            DateTime date;
+
+            while (true)
+            {
+                Console.Write("Czy chcesz użyć dzisiejszą datę? (t/n): ");
+                var key = Console.ReadKey(true).Key;
+                if (key == ConsoleKey.T)
+                {
+                    date = DateTime.Now;
+                    break;
+                }
+                else if(key == ConsoleKey.N)
+                {
+                    date = validator.ReadDate("Podaj datę: ");
+                    break;
+                }
+            }
+
             budgetService.AddTransaction(isIncome ? new Income(sourceOrName, amount, date) : new Expense(sourceOrName, amount, date));
             await storageService.SaveAsync(budgetService);
         }
         catch (Exception ex)
         {
-            helpers.ShowError(ex.Message);
+            ui.ShowError(ex.Message);
         }
-        await Task.Delay(300);
-    }
-    private (string sourceOrName, decimal amount, DateTime date) GetIncomeOrExpenseData(bool isIncome = true)
-    {
-
-        string sourceOrName = helpers.ReadNonEmptyString($"Podaj {(isIncome ? "źródło przychodu" : "nazwę wydatku")}: ");
-        decimal amount = helpers.ReadDecimal("Podaj kwotę w PLN: ");
-  
-        DateTime date;
-        while (true)
-        {
-            Console.Write("Czy chcesz użyć dzisiejszą datę? (t/n): ");
-            var key = Console.ReadKey(true).Key;
-            if (key == ConsoleKey.T || key == ConsoleKey.N)
-            {
-                date = helpers.ReadDate(key == ConsoleKey.T);
-                break;
-            }
-            else
-            {
-                Console.WriteLine("Niepoprawny klawisz!");
-            }
-        }
-
-        return (sourceOrName, amount, date);
     }
     private void ReturnToMenu()
     {
