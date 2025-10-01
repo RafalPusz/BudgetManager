@@ -129,5 +129,67 @@ namespace BudgetManager.Services
                 }
             }
         }
+
+        public void DrawUiFrame(string title, IEnumerable<string> lines, string? footer = null)
+        {
+            Console.Clear();
+
+            int contentWidth = lines.Any() ? lines.Max(line => line.Length) : 0;
+            int titleWidth = title.Length;
+            int footerWidth = string.IsNullOrWhiteSpace(footer) ? 0 : footer.Length;
+
+            int finalWidth = Math.Max(Math.Max(contentWidth, titleWidth), footerWidth);
+
+            finalWidth = Math.Clamp(finalWidth, 30, 100);
+
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine($" {new string('=', finalWidth)} ");
+            Console.ResetColor();
+            Console.WriteLine($"{title.PadLeft((finalWidth + title.Length) / 2)}");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine($" {new string('=', finalWidth)} ");
+            Console.ResetColor();
+
+            foreach (string line in lines)
+            {
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write("|");
+                Console.ResetColor();
+
+                Console.Write($"{line.PadRight(finalWidth)}");
+
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine("|");
+                Console.ResetColor();
+            }
+
+            if (!string.IsNullOrWhiteSpace(footer))
+            {
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine($"|{new string('=', finalWidth)}|");
+                Console.ResetColor();
+
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write("|");
+                Console.ResetColor();
+
+                Console.Write($"{footer.PadLeft((finalWidth + footer.Length) / 2)}");
+
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine("|");
+                Console.ResetColor();
+
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine($" {new string('=', finalWidth)} ");
+                Console.ResetColor();
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine($" {new string('=', finalWidth)}");
+                Console.ResetColor();
+            }
+        }
+
     }
 }
