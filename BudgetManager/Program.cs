@@ -114,7 +114,7 @@ public class Program
     {
         List<string> menuItems = ["1. Dodaj przychód", "2. Dodaj wydatek", "3. Edytuj przychód", "4. Edytuj wydatek", "5. Pokaż przychody", "6. Pokaż wydatki", "7. Wyjdź"];
 
-        helpers.DrawUiFrame("Zarządzanie budżetem", menuItems, $"Bilans na miesiąc {DateTime.Now:MMMM} {budgetService.GetMonthlyBalance(DateTime.Now.Year, DateTime.Now.Month)} zł."); 
+        helpers.DrawUiFrame("Zarządzanie budżetem", menuItems, $"Bilans na miesiąc {DateTime.Now:MMMM}: {budgetService.GetMonthlyBalance(DateTime.Now.Year, DateTime.Now.Month)} zł"); 
     }
 
     private void ShowIncomes()  
@@ -180,7 +180,7 @@ public class Program
         {
             try
             {
-                transactionList[(int)keyListNumber].Amount = (decimal)amount;
+                transactionList[keyListNumber].Amount = amount;
                 helpers.ShowConfirmMessange("Zmieniono kwotę.");
                 break;
             }
@@ -195,24 +195,16 @@ public class Program
         while (true)
         {
             Console.Clear();
-            Console.Write("Podaj nową datę: ");
-            try
-            {
-                DateTime newDate = helpers.DateValidation(Console.ReadLine() ?? "");
-                transactionList[(int)keyListNumber].Date = newDate;
+            DateTime newDate = helpers.ReadDate(false);
+            transactionList[keyListNumber].Date = newDate;
 
-                helpers.ShowConfirmMessange("Zmieniono datę");
-                break;
-            }
-            catch (Exception ex)
-            {
-                helpers.ShowError(ex.Message);
-            }
+            helpers.ShowConfirmMessange("Zmieniono datę");
+            break;
         }
     }
     private void DeleteTransactionOption(in bool isIncome, List<Transaction> transactionList, in int keyListNumber)
     {
-        Console.WriteLine($"Czy na pewno chcesz usunąć tranzakcję '{transactionList[(int)keyListNumber]}' (T/N);");
+        Console.WriteLine($"Czy na pewno chcesz usunąć tranzakcję '{transactionList[keyListNumber]}' (T/N);");
         while (true)
         {
             if (Console.ReadKey(true).KeyChar == 't' || Console.ReadKey(true).KeyChar == 'T')

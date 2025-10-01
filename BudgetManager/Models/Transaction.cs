@@ -53,8 +53,5 @@ namespace BudgetManager.Models
         // Abstract property to be implemented by derived classes (Income or Expense)
         public abstract string Title { get; }
 
-        // Provides a string representation of the transaction
-        public override string ToString() => $"{Date:dd MMMM yyy} | {Title} | {Amount} zł";
-
     }
 }
