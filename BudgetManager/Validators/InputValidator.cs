@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Menedżer_wydatków.Services
+namespace BudgetManager.Validators
 {
     internal class InputValidator
     {

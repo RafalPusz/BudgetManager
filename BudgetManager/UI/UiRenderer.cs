@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Menedżer_wydatków.Services
+namespace BudgetManager.UI
 {
     internal class UiRenderer
     {
@@ -79,5 +79,6 @@ namespace Menedżer_wydatków.Services
 
         public void ShowError(string message) => ShowMessage(message, ConsoleColor.Red);
         public void ShowSuccess(string message) => ShowMessage(message, ConsoleColor.Green);
+        public void ShowInfo(string message) => ShowMessage(message, ConsoleColor.Yellow);
     }
 }
