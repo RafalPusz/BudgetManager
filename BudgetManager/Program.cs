@@ -112,96 +112,35 @@ public class Program
     #region Methods that display data
     private void ShowMenu()
     {
-        Console.Clear();
-        int menuWidth = 40;
-        List<string> menuItems = ["1. Dodaj przychód", "2. Dodaj wydatek", "3. Edytuj przychód","4. Edytuj wydatek", "5. Pokaż przychody", "6. Pokaż wydatki", "7. Wyjdź"];
-        Console.WriteLine($"{"Zarządzanie budżetem".PadLeft((menuWidth + "Zarządzanie budżetem".Length) / 2)}");
-        Console.ForegroundColor = ConsoleColor.Cyan;
-        Console.WriteLine($" {new string('=', menuWidth)} ");
-        Console.ResetColor();
+        List<string> menuItems = ["1. Dodaj przychód", "2. Dodaj wydatek", "3. Edytuj przychód", "4. Edytuj wydatek", "5. Pokaż przychody", "6. Pokaż wydatki", "7. Wyjdź"];
 
-        foreach (string menuItem in menuItems)
-        {
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.Write("|");
-            Console.ResetColor();
-            Console.Write($"{menuItem}{new string(' ', menuWidth - menuItem.Length)}");
-
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.Write("|\n");    
-            Console.WriteLine($"|{new string(' ', menuWidth)}|");
-            Console.ResetColor();
-        }
-
-        string bilance = $"Bilans na miesiąc {DateTime.Now:MMMM}";
-        string bilanceCount = $"{budgetService.GetMonthlyBalance(DateTime.Now.Year, DateTime.Now.Month)} zł.";
-
-        Console.ForegroundColor = ConsoleColor.Cyan;
-        Console.WriteLine($"|{new string('=', menuWidth)}|");
-        Console.ResetColor();
-
-
-        Console.ForegroundColor = ConsoleColor.Cyan;
-        Console.Write("|");
-        Console.ResetColor();
-
-        Console.Write($"{new string(' ', (menuWidth - bilance.Length) / 2)}{bilance}{new string(' ', (menuWidth - bilance.Length) / 2)}");
-
-        Console.ForegroundColor = ConsoleColor.Cyan;
-        Console.Write("|\n");
-        Console.ResetColor();
-
-        Console.ForegroundColor = ConsoleColor.Cyan;
-        Console.Write("|");
-        Console.ResetColor();
-
-        Console.Write($"{new string(' ', (menuWidth - bilanceCount.Length) / 2)}{bilanceCount}{new string(' ', (menuWidth - bilanceCount.Length) / 2)}");
-
-        Console.ForegroundColor = ConsoleColor.Cyan;
-        Console.Write("|\n");
-        Console.ResetColor();
-
-        Console.ForegroundColor = ConsoleColor.Cyan;
-        Console.WriteLine($" {new string('=', menuWidth)} ");
-        Console.ResetColor();
-       
+        helpers.DrawUiFrame("Zarządzanie budżetem", menuItems, $"Bilans na miesiąc {DateTime.Now:MMMM}: {budgetService.GetMonthlyBalance(DateTime.Now.Year, DateTime.Now.Month)} zł"); 
     }
-    private void ShowIncomes()
+
+    private void ShowIncomes()  
     {
-        Console.Clear();
-        if (budgetService.GetIncomes().Any())
+        var incomes = budgetService.GetIncomes()
+            .Select(i => $"{i.Date:d MMMM yyyy} | {i.Source} | {i.Amount} zł")
+            .ToList();
+        if (!incomes.Any())
         {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"==========Twoje przychody==========");
-            Console.ResetColor();
-            foreach (var income in budgetService.GetIncomes())
-            {
-                Console.WriteLine(income);
-            }
+            incomes.Add("Brak przychodów");
         }
-        else
-        {
-            Console.WriteLine("Brak przychodów.");
-        }
+
+        helpers.DrawUiFrame("Twoje przychody", incomes);
         ReturnToMenu();
     }
     private void ShowExpenses()
     {
-        Console.Clear();
-        if (budgetService.GetExpenses().Any())
+        var expenses = budgetService.GetExpenses()
+            .Select(e => $"{e.Date:dd MMMM yyyy} | {e.Name} | {e.Amount} zł")
+            .ToList();
+        if(!expenses.Any())
         {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"==========Twoje wydatki==========");
-            Console.ResetColor();
-            foreach (var expense in budgetService.GetExpenses())
-            {
-                Console.WriteLine(expense);
-            }
+            expenses.Add("Brak wydatków");
         }
-        else
-        {
-            Console.WriteLine("Brak wydatków");
-        }
+
+        helpers.DrawUiFrame("Twoje wydadki", expenses);
         ReturnToMenu();
     }
     #endregion
@@ -241,7 +180,7 @@ public class Program
         {
             try
             {
-                transactionList[(int)keyListNumber].Amount = (decimal)amount;
+                transactionList[keyListNumber].Amount = amount;
                 helpers.ShowConfirmMessange("Zmieniono kwotę.");
                 break;
             }
@@ -256,24 +195,16 @@ public class Program
         while (true)
         {
             Console.Clear();
-            Console.Write("Podaj nową datę: ");
-            try
-            {
-                DateTime newDate = helpers.DateValidation(Console.ReadLine() ?? "");
-                transactionList[(int)keyListNumber].Date = newDate;
+            DateTime newDate = helpers.ReadDate(false);
+            transactionList[keyListNumber].Date = newDate;
 
-                helpers.ShowConfirmMessange("Zmieniono datę");
-                break;
-            }
-            catch (Exception ex)
-            {
-                helpers.ShowError(ex.Message);
-            }
+            helpers.ShowConfirmMessange("Zmieniono datę");
+            break;
         }
     }
     private void DeleteTransactionOption(in bool isIncome, List<Transaction> transactionList, in int keyListNumber)
     {
-        Console.WriteLine($"Czy na pewno chcesz usunąć tranzakcję '{transactionList[(int)keyListNumber]}' (T/N);");
+        Console.WriteLine($"Czy na pewno chcesz usunąć tranzakcję '{transactionList[keyListNumber]}' (T/N);");
         while (true)
         {
             if (Console.ReadKey(true).KeyChar == 't' || Console.ReadKey(true).KeyChar == 'T')
@@ -291,29 +222,24 @@ public class Program
     private async Task EditIncomeOrExpenseData(bool isIncome = true)
     {
         Console.ForegroundColor = ConsoleColor.Green;
-        Console.WriteLine($"==========Lista {(isIncome ? "przychodów" : "wydatków")}==========");
-        Console.ResetColor();
 
         List<Transaction> transactionList = isIncome
         ? budgetService.Transactions.OfType<Income>().Cast<Transaction>().ToList()
         : budgetService.Transactions.OfType<Expense>().Cast<Transaction>().ToList();
 
-        if (!transactionList.Any())
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("Brak danych");
-            Console.ResetColor();
-            return;
-        }
         int keyListNumber;
+
+        var transactionListToStringList = transactionList
+            .Select(t => $"{t.Date: d MMMM yyyy} | {t.Title} | {t.Amount}")
+            .ToList();
+
         while (true)
         {
-            Console.Clear();
-            for (int i = 0; i < transactionList.Count(); i++)
+            helpers.DrawUiFrame($"Lista {(isIncome ? "przychodów" : "wydatków")}", transactionListToStringList, "Wybierz z listy pozycję, którą chcesz edytować");
+            if(!transactionList.Any())
             {
-                Console.WriteLine($"{i + 1}. {transactionList[i]}");
+                ReturnToMenu();
             }
-            Console.WriteLine("\nWybierz z listy pozycję, którą chcesz edytować.");
 
             try
             {
@@ -331,13 +257,9 @@ public class Program
         }
 
         keyListNumber--;
-        Console.Clear();
-        Console.WriteLine($"Edytowany element: {transactionList[(int)keyListNumber]}");
-        Console.WriteLine("\n\nWybierz element który chcesz edytować:");
-        Console.WriteLine("1. Nazwa");
-        Console.WriteLine("2. Kwota");
-        Console.WriteLine("3. Data");
-        Console.WriteLine("4. Usuń element");
+        List<string> menuItems= ["1. Nazwa", "2. Kwota", "3. Data", "4. Usuń element"];
+
+        helpers.DrawUiFrame($"Edytowany element: {transactionList[(int)keyListNumber]}", menuItems, "Wybierz element który chcesz edytować");
 
         while (true)
         {
