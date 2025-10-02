@@ -22,7 +22,7 @@ Launch the program: <br/>
 <br />
 <br />
 Add an income or expense: <br/>
-<img src="https://i.imgur.com/example2.png" height="80%" width="80%" alt="Add Income/Expense"/>
+<img src="https://imgur.com/a/FqyzNmC" height="80%" width="80%" alt="Add Income/Expense"/>
 <br />
 <br />
 Edit or delete a transaction: <br/>
@@ -30,7 +30,7 @@ Edit or delete a transaction: <br/>
 <br />
 <br />
 View income or expense: <br/>
-<img src="https://i.imgur.com/example4.png" height="80%" width="80%" alt="Monthly Balance"/>
+<img src="https://imgur.com/IMJFPhu" height="80%" width="80%" alt="Monthly Balance"/>
 </p>
 
 ## Features
