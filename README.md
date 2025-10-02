@@ -18,20 +18,21 @@ BudgetManager is a simple console application written in C# that helps users man
 
 <p align="center">
 Launch the program: <br/>
-<img src="https://i.imgur.com/HOwMJ7n.png" height="80%" width="80%" alt="BudgetManager Start"/>
+<img src="https://i.imgur.com/oElmvQH.png" height="80%" width="80%" alt="BudgetManager Start"/>
 <br />
 <br />
 Add an income or expense: <br/>
-<img src="https://i.imgur.com/example2.png" height="80%" width="80%" alt="Add Income/Expense"/>
+<img src="https://i.imgur.com/heIBmHc.png" height="80%" width="80%" alt="Add Income/Expense"/>
 <br />
 <br />
 Edit or delete a transaction: <br/>
-<img src="https://i.imgur.com/example3.png" height="80%" width="80%" alt="Edit/Delete Transaction"/>
+<img src="https://i.imgur.com/BPwoXVx.png" height="80%" width="80%" alt="Edit/Delete Transaction"/>
 <br />
 <br />
 View income or expense: <br/>
-<img src="https://i.imgur.com/example4.png" height="80%" width="80%" alt="Monthly Balance"/>
+<img src="https://i.imgur.com/IMJFPhu.png" height="80%" width="80%" alt="Monthly Balance"/>
 </p>
+
 
 ## Features
 - Add, edit, and remove incomes and expenses
