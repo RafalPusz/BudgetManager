@@ -32,10 +32,9 @@ namespace BudgetManager.Services
                 string title = _validator.ReadNonEmptyString($"Podaj {(typeof(T) == typeof(Income) ? "źródło przychodu" : "nazwę wydatku")}: ");
                 decimal amount = _validator.ReadDecimal("Podaj kwotę w PLN: ");
                 DateTime date;
-
+                Console.Write("Czy chcesz użyć dzisiejszą datę? (t/n): ");
                 while (true)
                 {
-                    Console.Write("Czy chcesz użyć dzisiejszą datę? (t/n): ");
                     var key = Console.ReadKey(true).Key;
                     if (key == ConsoleKey.T)
                     {
@@ -65,14 +64,14 @@ namespace BudgetManager.Services
         #region Edit Transaction menu and options
         public async Task Edit<T>() where T : Transaction
         {
-            Console.ForegroundColor = ConsoleColor.Green;
 
             var transactionList = _budget.Transactions.OfType<T>().ToList();
 
             if (!transactionList.Any())
             {
                 _ui.DrawUiFrame($"Lista {(typeof(T) == typeof(Income) ? "przychodów" : "wydatków")}", new List<string> { "Brak danych" });
-                return;
+
+                _ui.ReturnToMenu();
             }
 
             var display = transactionList.Select(t => $"{t.Date:d MMMM yyyy} | {t.Title} | {t.Amount} zł").ToList();
@@ -81,7 +80,7 @@ namespace BudgetManager.Services
             int selection = -1;
             while (true)
             {
-                _ui.DrawUiFrame($"Lista {(typeof(T) == typeof(Income) ? "przychodów" : "wydatków")}", display, "Wybierz numer do edycji");
+                _ui.DrawUiFrame($"Lista {(typeof(T) == typeof(Income) ? "przychodów" : "wydatków")}", display, true ,"Wybierz numer do edycji");
                 try
                 {
                     selection = _validator.ParseInt(Console.ReadKey(true).KeyChar.ToString());
@@ -100,8 +99,8 @@ namespace BudgetManager.Services
 
             var transaction = transactionList[selection - 1];
 
-            List<string> ops = new() { "1. Nazwa", "2. Kwota", "3. Data", "4. Usuń" };
-            _ui.DrawUiFrame($"Edytowany: {transaction}", ops, "Wybierz akcję:");
+            List<string> ops = ["Nazwa", "Kwota", "Data", "Usuń"];
+            _ui.DrawUiFrame($"Edytowany: {transaction.Title}", ops, true, "Wybierz akcję");
 
             while (true)
             {
@@ -166,5 +165,7 @@ namespace BudgetManager.Services
             return;
         }
         #endregion
+
+
     }
 }

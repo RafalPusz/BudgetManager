@@ -30,6 +30,8 @@ namespace BudgetManager.UI
             }
 
             _ui.DrawUiFrame($"Twoje {(typeof(T) == typeof(Income) ? "przychody" : "wydatki")}", display);
+
+            _ui.ReturnToMenu();
         }
     }
 }

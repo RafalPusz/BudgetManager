@@ -14,11 +14,11 @@ using System.Xml.Linq;
 public class Program
 {
     private BudgetService budgetService; // Handles all financial operations (add, edit, calculate balance)
-    private InputValidator inputValidator;
-    private UiRenderer uiRenderer;
-    private StorageService storageService; // Manages data loading and saving from/to file
-    private TransactionMenu transactionMenu;
-    private TransactionService transactionService;
+    private readonly InputValidator inputValidator;
+    private readonly UiRenderer uiRenderer;
+    private readonly StorageService storageService; // Manages data loading and saving from/to file
+    private TransactionMenu? transactionMenu;
+    private TransactionService? transactionService;
 
     public Program()
     {
@@ -26,8 +26,7 @@ public class Program
         inputValidator = new();
         uiRenderer = new();
         storageService = new();
-        transactionMenu = new(budgetService, uiRenderer);
-        transactionService = new(budgetService, inputValidator, uiRenderer, storageService);
+       
     }
 
     #region Engine this application
@@ -48,6 +47,8 @@ public class Program
 
         // Load budget data from file with loading animation
         budgetService = await ShowLoadingAndLoadBudgetAsync();
+        transactionMenu = new(budgetService, uiRenderer);
+        transactionService = new(budgetService, inputValidator, uiRenderer, storageService);
 
         //Automatically save data when the program exits
         AppDomain.CurrentDomain.ProcessExit += async (_, __) =>
@@ -97,6 +98,11 @@ public class Program
         while (true)
         {
 
+            if (transactionService == null || transactionMenu == null)
+            {
+                uiRenderer.ShowError("Błąd inicjalizacji — spróbuj ponownie uruchomić program.");
+                return;
+            }
             ShowMenu();
 
             // Map user key input to corresponding actions
@@ -106,8 +112,8 @@ public class Program
                 '2' => () => transactionService.Add<Expense>(),
                 '3' => () => transactionService.Edit<Income>(),
                 '4' => () => transactionService.Edit<Expense>(),
-                '5' => () => { transactionMenu.Show<Income>(); ReturnToMenu(); return Task.CompletedTask;},
-                '6' => () => { transactionMenu.Show<Expense>(); ReturnToMenu(); return Task.CompletedTask;},
+                '5' => () => { transactionMenu.Show<Income>(); return Task.CompletedTask;},
+                '6' => () => { transactionMenu.Show<Expense>(); return Task.CompletedTask;},
                 '7' => async () =>
                 {
                     await storageService.SaveAsync(budgetService);
@@ -128,26 +134,11 @@ public class Program
     #region Methods that display data
     private void ShowMenu()
     {
-        List<string> menuItems = ["1. Dodaj przychód", "2. Dodaj wydatek", "3. Edytuj przychód", "4. Edytuj wydatek", "5. Pokaż przychody", "6. Pokaż wydatki", "7. Wyjdź"];
+        List<string> menuItems = ["Dodaj przychód", "Dodaj wydatek", "Edytuj przychód", "Edytuj wydatek", "Pokaż przychody", "Pokaż wydatki", "Wyjdź"];
 
-        uiRenderer.DrawUiFrame("Zarządzanie budżetem", menuItems, $"Bilans na miesiąc {DateTime.Now:MMMM}: {budgetService.GetMonthlyBalance(DateTime.Now.Year, DateTime.Now.Month)} zł"); 
+        uiRenderer.DrawUiFrame("Zarządzanie budżetem", menuItems, true, $"Bilans na miesiąc {DateTime.Now:MMMM}: {budgetService.GetMonthlyBalance(DateTime.Now.Year, DateTime.Now.Month)} zł"); 
     }
 
     #endregion
 
-    private void ReturnToMenu()
-    {
-        Console.WriteLine("\nKliknij 'p', aby powrócić do menu.");
-        while (Console.KeyAvailable)
-        {
-            Console.ReadKey(true);
-        }
-        while (true)
-        {
-            if (Console.ReadKey(true).Key == ConsoleKey.P)
-            {
-                return;
-            }
-        }
-    }
 }
